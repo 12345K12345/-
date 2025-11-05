@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>الملفات المرفوعة</title>
+  <style>
+    body {
+      font-family: "Cairo", sans-serif;
+      background: #f7f3f3;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: linear-gradient(to right, #8b0000, #b22222);
+      color: white;
+      padding: 20px;
+      font-size: 24px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      padding: 20px;
+    }
+    .item {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: center;
+      padding: 10px;
+    }
+    img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    a.download {
+      display: inline-block;
+      margin-top: 10px;
+      background: #b22222;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+    a.download:hover {
+      background: #8b0000;
+    }
+  </style>
+</head>
+<body>
+  <header>📚 الملفات المرفوعة</header>
+  <div class="gallery">
+    {% for file in files %}
+      <div class="item">
+        {% if file.endswith('.jpg') or file.endswith('.png') or file.endswith('.jpeg') or file.endswith('.gif') %}
+          <img src="{{ url_for('uploaded_file', filename=file) }}" alt="{{ file }}">
+        {% else %}
+          <p>📄 {{ file }}</p>
+        {% endif %}
+        <a class="download" href="{{ url_for('uploaded_file', filename=file) }}" download>تحميل</a>
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>
